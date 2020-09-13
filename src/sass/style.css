@@ -151,7 +151,7 @@ header ul li:before {
   transition: 0.8s;
 }
 .content .info-header-tab:hover:after {
-  width: 60%;
+  width: 80%;
 }
 .content .info-tabcontent {
   width: 100%;
