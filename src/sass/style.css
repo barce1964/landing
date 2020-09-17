@@ -618,3 +618,58 @@ header ul li:before {
 .overlay .popup-form__btn:hover {
   box-shadow: 0 0 10px #c78030;
 }
+.rest {
+  position: fixed;
+  display: block;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+  transition: all 0.8s;
+}
+.rest .popup {
+  position: fixed;
+  z-index: 4;
+  left: 50%;
+  top: 150px;
+  width: 752px;
+  transform: translateX(-50%);
+}
+.rest .popup-close {
+  position: absolute;
+  right: -13px;
+  top: -20px;
+  cursor: pointer;
+  font-family: arial;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
+  opacity: 0.3;
+  transition: all 0.8s;
+}
+.rest .popup-close:hover {
+  opacity: 1;
+}
+.rest .popup-title {
+  display: block;
+  width: 100%;
+  height: 71px;
+  line-height: 71px;
+  margin: 0;
+  background-color: #c78030;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 21px;
+  font-weight: 500;
+  text-align: center;
+}
+.rest .popup-descr {
+  background: url(../img/modal.jpg) center no-repeat;
+  padding: 20px 40px 20px 40px;
+  font-weight: 300;
+  line-height: 22px;
+  font-size: 18px;
+  text-align: center;
+  color: #ffffff;
+}

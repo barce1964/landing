@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 
     // Timer
-    var deadline = '2020-09-15';
+    var deadline = '2020-09-28';
 
     function getTimeRemaining(endtime) {
         var t = Date.parse(endtime) - Date.parse(new Date()),
@@ -81,4 +81,76 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     setClock('timer', deadline);
+
+    // Modal
+    var more = document.querySelector('.more'),
+        overlay = document.querySelector('.overlay'),
+        close = document.querySelector('.popup-close');
+
+    more.addEventListener('click', function() {
+        overlay.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';
+    });
+
+    close.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        more.classList.remove('more-splash');
+        document.body.style.overflow = '';
+    });
+
+    class Options {
+        constructor(height = 10, width = 10, bg = '#ffffff', fontSize = 14, textAlign = 'left') {
+            this.height = height;
+            this.width = width;
+            this.bg = bg;
+            this.fontSize = fontSize;
+            this.textAlign = textAlign;
+            this.rest = document.createElement('div');
+            this.popup = document.createElement('div');
+            this.popupClose = document.createElement('div');
+            this.popupTitle = document.createElement('div');
+            this.popupDescr = document.createElement('div');
+        }
+
+        createDiv() {
+            this.rest.className = "rest fade";
+            document.body.appendChild(this.rest);
+            this.popup.className = "popup";
+            this.rest.appendChild(this.popup);
+            this.popupClose.className = "popup-close";
+            this.popupClose.textContent = "X";
+            this.popup.appendChild(this.popupClose);
+            this.popupTitle.className = "popup-title";
+            this.popupTitle.textContent = "Ваш отдых";
+            this.popup.appendChild(this.popupTitle);
+            this.popupDescr.className = 'popup-descr';
+            this.popupDescr.textContent = "Йога, массажи и плавание в море - помогут уставшей спине! Индийские йоги считали, что здоровье человека можно определить по тому, насколько здоров и гибок у него позвоночник. Интересно, что бы древние йоги сказали, глядя на современного человека, который уже со школьного возраста мучается болями в спине, работает подолгу в неудобных сидячих позах и не умеет расслабляться, имеет искривление, которое в итоге приведет к болезням других органов? Йоги сказали бы – займись собой и срочно!";
+            this.popup.appendChild(this.popupDescr);
+            
+            //let param = `height:${this.height}px; width:${this.width}px; background-color:${this.bg}; font-size:${this.fontSize}px; text-align:${this.textAlign}`;
+            //elem.style.cssText = param;
+        }
+
+        // createDiv() {
+        //     let elem = document.createElement('div');
+        //     document.body.appendChild(elem);
+        //     let param = `height:${this.height}px; width:${this.width}px; background-color:${this.bg}; font-size:${this.fontSize}px; text-align:${this.textAlign}`;
+        //     elem.style.cssText = param;
+        // }
+    }
+
+    const item = new Options(100, 100);
+    item.createDiv();
+    item.popupClose.addEventListener('click', function() {
+        item.rest.style.display = 'none';
+        more.classList.remove('more-splash');
+        document.body.style.overflow = '';
+    });
+
+    var detail = document.querySelectorAll('.description-btn');
+
+    detail[0].addEventListener('click', function() {
+        console.log('test');
+    });
 });
