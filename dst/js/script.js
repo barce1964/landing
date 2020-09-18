@@ -99,6 +99,7 @@ window.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     });
 
+    // Object Options
     class Options {
         constructor(height = 10, width = 10, bg = '#ffffff', fontSize = 14, textAlign = 'left') {
             this.height = height;
@@ -122,35 +123,30 @@ window.addEventListener('DOMContentLoaded', function() {
             this.popupClose.textContent = "X";
             this.popup.appendChild(this.popupClose);
             this.popupTitle.className = "popup-title";
-            this.popupTitle.textContent = "Ваш отдых";
             this.popup.appendChild(this.popupTitle);
             this.popupDescr.className = 'popup-descr';
-            this.popupDescr.textContent = "Йога, массажи и плавание в море - помогут уставшей спине! Индийские йоги считали, что здоровье человека можно определить по тому, насколько здоров и гибок у него позвоночник. Интересно, что бы древние йоги сказали, глядя на современного человека, который уже со школьного возраста мучается болями в спине, работает подолгу в неудобных сидячих позах и не умеет расслабляться, имеет искривление, которое в итоге приведет к болезням других органов? Йоги сказали бы – займись собой и срочно!";
             this.popup.appendChild(this.popupDescr);
-            
-            //let param = `height:${this.height}px; width:${this.width}px; background-color:${this.bg}; font-size:${this.fontSize}px; text-align:${this.textAlign}`;
-            //elem.style.cssText = param;
         }
-
-        // createDiv() {
-        //     let elem = document.createElement('div');
-        //     document.body.appendChild(elem);
-        //     let param = `height:${this.height}px; width:${this.width}px; background-color:${this.bg}; font-size:${this.fontSize}px; text-align:${this.textAlign}`;
-        //     elem.style.cssText = param;
-        // }
     }
 
-    const item = new Options(100, 100);
-    item.createDiv();
-    item.popupClose.addEventListener('click', function() {
-        item.rest.style.display = 'none';
-        more.classList.remove('more-splash');
-        document.body.style.overflow = '';
-    });
-
-    var detail = document.querySelectorAll('.description-btn');
-
-    detail[0].addEventListener('click', function() {
-        console.log('test');
-    });
+    let detail = document.querySelectorAll('.description-btn'),
+        descrText = document.querySelectorAll('.description-text'),
+        infoHeader = document.querySelectorAll('.info-header-tab');
+    
+    for (let i = 0; i < detail.length; i++) {
+        detail[i].addEventListener('click', function() {
+            const item = new Options(100, 100);
+            item.createDiv();
+            item.popupClose.addEventListener('click', function() {
+                item.rest.style.display = 'none';
+                more.classList.remove('more-splash');
+                document.body.style.overflow = '';
+            });
+            item.popupDescr.textContent = descrText[i].textContent;
+            item.popupTitle.textContent = infoHeader[i].textContent;
+            item.rest.style.display = 'block';
+            detail[i].classList.add('more-splash');
+            document.body.style.overflow = 'hidden';
+        });
+    }
 });
