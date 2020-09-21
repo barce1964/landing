@@ -115,16 +115,17 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
         createDiv() {
-            this.rest.className = "rest fade";
+            this.rest.classList.add('rest');
+            this.rest.classList.add('fade');
             document.body.appendChild(this.rest);
-            this.popup.className = "popup";
+            this.popup.classList.add('popup');
             this.rest.appendChild(this.popup);
-            this.popupClose.className = "popup-close";
+            this.popupClose.classList.add('popup-close');
             this.popupClose.textContent = "X";
             this.popup.appendChild(this.popupClose);
-            this.popupTitle.className = "popup-title";
+            this.popupTitle.classList.add('popup-title');
             this.popup.appendChild(this.popupTitle);
-            this.popupDescr.className = 'popup-descr';
+            this.popupDescr.classList.add('popup-descr');
             this.popup.appendChild(this.popupDescr);
         }
     }
@@ -149,4 +150,100 @@ window.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
         });
     }
+
+    //form
+    let message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся!',
+        failure: 'Что-то пошло не так...'
+    };
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
+
+    statusMessage.classList.add('status');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        form.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'php/server.php');
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        let formData = new FormData(form);
+        let obj = {};
+        formData.forEach(function(value, key) {
+            obj[key] = value;
+        });
+        let json = JSON.stringify(obj);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function() {
+            if (request.readyState < 4) {
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                statusMessage.innerHTML = message.success;
+            } else {
+                statusMessage.innerHTML = message.failure;
+            }
+        });
+
+        for (let i = 0; i < input.length; i++) {
+            input[i].value = '';
+        }
+    });
+
+    //Contacts
+    let mes = {
+        loading: 'Отправка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся!',
+        failure: 'Что-то пошло не так...'
+    };
+
+    let forma = document.getElementById('form'),
+        inp = forma.getElementsByTagName('input'),
+        statMessage = document.createElement('div');
+
+    statMessage.classList.add('status');
+    statMessage.style.color = '#ffffff';
+
+    forma.addEventListener('submit', function(event) {
+        event.preventDefault();
+        forma.appendChild(statMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'php/server.php');
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+        let formDat = new FormData(forma);
+
+        let objec = {};
+        
+        
+        for (let j = 0; j < inp.length; j++) {
+            objec[inp[j].type] = inp[j].value;
+        }
+
+        let json = JSON.stringify(objec);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function() {
+            if (request.readyState < 4) {
+                statMessage.innerHTML = mes.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                statMessage.innerHTML = mes.success;
+            } else {
+                statMessage.innerHTML = mes.failure;
+            }
+        });
+
+        for (let j = 0; j < inp.length; j++) {
+            inp[j].value = '';
+        }
+    });
+
 });
